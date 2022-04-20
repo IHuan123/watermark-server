@@ -31,25 +31,4 @@ func main() {
 	if err := r.Run(":9000"); err != nil {
 		panic(err)
 	}
-	//var mux = http.NewServeMux()
-	//mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	//	r.ParseForm() //解析参数，默认是不会解析的
-	//	//body := getUrl(r.Form["key_words"][0])
-	//	url := modules.GetUrl(r.Form["key_words"][0])
-	//	resp, err := http.Get(url)
-	//	defer resp.Body.Close()
-	//	body, err := ioutil.ReadAll(resp.Body)
-	//	_, err = fmt.Fprintf(w, string(body))
-	//	if err != nil {
-	//		fmt.Println(err.Error())
-	//	}
-	//})
-	//s := &http.Server{
-	//	Addr:           ":9000",
-	//	Handler:        mux,
-	//	ReadTimeout:    10 * time.Second,
-	//	WriteTimeout:   10 * time.Second,
-	//	MaxHeaderBytes: 1 << 20,
-	//}
-	//log.Fatal(s.ListenAndServe())
 }

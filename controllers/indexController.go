@@ -1,13 +1,10 @@
 package controllers
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
-	"regexp"
 	"strings"
+	"watermarkServer/handleVideo"
 	"watermarkServer/modules"
 )
 
@@ -21,55 +18,9 @@ const (
 )
 
 type IndexController struct{}
-type Url struct {
-	Url string
-}
-
-//获取真实请求地址的path
-func getRealityUrl(url, ua string) string {
-	client := &http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		panic(err)
-	}
-	req.Header.Set("User-Agent", ua)
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Println(err)
-	}
-	return resp.Request.URL.Path
-}
-
-// 抖音
-//通过path获取到到id 请求dy_url
-func douYin(url string) string {
-	path := getRealityUrl(url, phone_ua)
-	re := regexp.MustCompile("[0-9]+")
-	ids := re.FindAllString(path, -1)
-	if len(ids) == 0 {
-		return ""
-	}
-	body := modules.HttpGet(dy_url+ids[0], phone_ua)
-
-	type Video struct {
-		Item_list []*struct {
-			Video *struct {
-				Play_addr *struct {
-					Url_list []string
-				}
-			}
-		}
-	}
-	var data Video
-	json.Unmarshal([]byte(body), &data)
-	fmt.Println(data.Item_list[0].Video.Play_addr.Url_list[0])
-	wmVideoUrl := data.Item_list[0].Video.Play_addr.Url_list[0]
-	wmVideoUrl = strings.Replace(wmVideoUrl, "playwm", "play", -1)
-	return wmVideoUrl
-
-}
 
 func (ctr *IndexController) Index(ctx *gin.Context) {
+	var path string
 	var keyWords string = ctx.Query("key_words")
 	if keyWords == "" {
 		ctx.JSON(http.StatusOK, gin.H{
@@ -80,6 +31,17 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		return
 	}
 	url := modules.GetUrl(keyWords)
-	path := douYin(url)
-	ctx.String(http.StatusOK, path)
+	if strings.Index(url, "douyin.com") != -1 {
+		path = handleVideo.DouYin(url, phone_ua)
+	} else if strings.Index(url, "b23.tv") != -1 {
+		path = handleVideo.Bilibili(url, phone_ua)
+	} else if strings.Index(url, "huoshan.com") != -1 {
+		path = handleVideo.HuoShan(url, phone_ua)
+	}
+
+	ctx.JSON(http.StatusOK, &gin.H{
+		"code": http.StatusOK,
+		"data": path,
+		"msg":  "解析完成",
+	})
 }
