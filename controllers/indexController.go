@@ -37,6 +37,8 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		path = handleVideo.Bilibili(url, phone_ua)
 	} else if strings.Index(url, "huoshan.com") != -1 {
 		path = handleVideo.HuoShan(url, phone_ua)
+	} else if strings.Index(url, "kuaishou.com") != -1 {
+		path = handleVideo.KuaiShou(url, phone_ua)
 	}
 
 	ctx.JSON(http.StatusOK, &gin.H{
