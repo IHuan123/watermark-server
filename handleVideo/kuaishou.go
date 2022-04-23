@@ -7,7 +7,6 @@ import (
 	"net/http"
 )
 
-//获取真实请求地址的path
 func getKSRealityUrl(url, ua string) []byte {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
@@ -19,6 +18,7 @@ func getKSRealityUrl(url, ua string) []byte {
 	if err != nil {
 		log.Println(err)
 	}
+	fmt.Println(resp.Request.URL)
 	body, _ := ioutil.ReadAll(resp.Body)
 	return body
 }
@@ -26,6 +26,5 @@ func getKSRealityUrl(url, ua string) []byte {
 //bilibili
 func KuaiShou(url, ua string) string {
 	body := getKSRealityUrl(url, ua)
-	fmt.Println(string(body))
 	return string(body)
 }
