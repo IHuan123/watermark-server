@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"regexp"
 )
 
 func getKSRealityUrl(url, ua string) []byte {
@@ -26,5 +27,10 @@ func getKSRealityUrl(url, ua string) []byte {
 //bilibili
 func KuaiShou(url, ua string) string {
 	body := getKSRealityUrl(url, ua)
-	return string(body)
+	//解析获取的body
+	regs := regexp.MustCompile(`srcNoMark":"(.*?)"`).FindStringSubmatch(string(body))
+	if len(regs) != 2 {
+		return ""
+	}
+	return regs[1]
 }

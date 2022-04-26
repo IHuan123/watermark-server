@@ -1,13 +1,14 @@
 package handleVideo
 
 import (
-	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"regexp"
 )
 
 //获取真实请求地址的path
-func getBiLiRealityUrl(url, ua string) string {
+func getBiLi(url, ua string) []byte {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -18,13 +19,17 @@ func getBiLiRealityUrl(url, ua string) string {
 	if err != nil {
 		log.Println(err)
 	}
-	fmt.Println(resp.Request.URL)
-	return resp.Request.URL.Path
+	body, _ := ioutil.ReadAll(resp.Body)
+	return body
 }
 
 //bilibili
 func Bilibili(url, ua string) string {
-	path := getBiLiRealityUrl(url, ua)
-	fmt.Println(path)
-	return "hello"
+	body := getBiLi(url, ua)
+	reg := regexp.MustCompile(`readyVideoUrl:\s*'(.*)',`)
+	regs := reg.FindStringSubmatch(string(body))
+	if len(regs) != 2 {
+		return ""
+	}
+	return regs[0]
 }

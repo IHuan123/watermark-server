@@ -39,6 +39,8 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		path = handleVideo.HuoShan(url, phone_ua)
 	} else if strings.Index(url, "kuaishou.com") != -1 {
 		path = handleVideo.KuaiShou(url, phone_ua)
+	} else if strings.Index(url, "pipix.com") != -1 {
+		path = handleVideo.PiPixia(url, phone_ua)
 	}
 
 	ctx.JSON(http.StatusOK, &gin.H{
