@@ -19,6 +19,8 @@ const (
 
 type IndexController struct{}
 
+var base = &modules.BaseController{}
+
 func (ctr *IndexController) Index(ctx *gin.Context) {
 	var path string
 	var keyWords string = ctx.Query("key_words")
@@ -31,21 +33,24 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		return
 	}
 	url := modules.GetUrl(keyWords)
+	var err error
 	if strings.Index(url, "douyin.com") != -1 {
-		path = handleVideo.DouYin(url, phone_ua)
+		path, err = handleVideo.DouYin(url, phone_ua)
 	} else if strings.Index(url, "b23.tv") != -1 {
-		path = handleVideo.Bilibili(url, phone_ua)
+		path, err = handleVideo.BiliBili(url, phone_ua)
 	} else if strings.Index(url, "huoshan.com") != -1 {
-		path = handleVideo.HuoShan(url, phone_ua)
+		path, err = handleVideo.HuoShan(url, phone_ua)
 	} else if strings.Index(url, "kuaishou.com") != -1 {
-		path = handleVideo.KuaiShou(url, phone_ua)
+		path, err = handleVideo.KuaiShou(url, phone_ua)
 	} else if strings.Index(url, "pipix.com") != -1 {
-		path = handleVideo.PiPixia(url, phone_ua)
+		path, err = handleVideo.PiPixia(url, phone_ua)
+	} else if strings.Index(url, "weibo.com") != -1 {
+		path, err = handleVideo.WeiBo(url, phone_ua)
+	}
+	if err != nil {
+		base.Err(ctx, err.Error())
+		return
 	}
 
-	ctx.JSON(http.StatusOK, &gin.H{
-		"code": http.StatusOK,
-		"data": path,
-		"msg":  "解析完成",
-	})
+	base.Success(ctx, path, "解析完成")
 }
