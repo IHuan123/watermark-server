@@ -9,10 +9,10 @@ import (
 )
 
 const (
-	//抖音地址
-	dy_url = "https://www.douyin.com/web/api/v2/aweme/iteminfo/?item_ids="
 	// pc端
 	pc_ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
+	//mac chrome
+	mac_ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
 	// 移动端
 	phone_ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1"
 )
@@ -34,18 +34,22 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 	}
 	url := modules.GetUrl(keyWords)
 	var err error
-	if strings.Index(url, "douyin.com") != -1 {
+	if strings.Contains(url, "douyin.com") {
 		path, err = handleVideo.DouYin(url, phone_ua)
-	} else if strings.Index(url, "b23.tv") != -1 {
+	} else if strings.Contains(url, "b23.tv") {
 		path, err = handleVideo.BiliBili(url, phone_ua)
-	} else if strings.Index(url, "huoshan.com") != -1 {
+	} else if strings.Contains(url, "huoshan.com") {
 		path, err = handleVideo.HuoShan(url, phone_ua)
-	} else if strings.Index(url, "kuaishou.com") != -1 {
+	} else if strings.Contains(url, "kuaishou.com") {
 		path, err = handleVideo.KuaiShou(url, phone_ua)
-	} else if strings.Index(url, "pipix.com") != -1 {
+	} else if strings.Contains(url, "pipix.com") {
 		path, err = handleVideo.PiPixia(url, phone_ua)
-	} else if strings.Index(url, "weibo.com") != -1 {
-		path, err = handleVideo.WeiBo(url, phone_ua)
+	} else if strings.Contains(url, "weibo.com") {
+		path, err = handleVideo.WeiBo(url, pc_ua)
+	} else if strings.Contains(url, "weishi.qq.com") {
+		path, err = handleVideo.WeiShi(url, phone_ua)
+	} else if strings.Contains(url, "xiaochuankeji.cn") {
+		path, err = handleVideo.ZuiYou(url, phone_ua)
 	}
 	if err != nil {
 		base.Err(ctx, err.Error())

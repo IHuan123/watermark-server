@@ -3,7 +3,6 @@ package handleVideo
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"log"
 	"net/http"
 	"regexp"
@@ -55,7 +54,6 @@ func DouYin(url string, ua string) (string, error) {
 	}
 	var data Video
 	json.Unmarshal([]byte(body), &data)
-	fmt.Println(data.Item_list[0].Video.Play_addr.Url_list[0])
 	wmVideoUrl := data.Item_list[0].Video.Play_addr.Url_list[0]
 	wmVideoUrl = strings.Replace(wmVideoUrl, "playwm", "play", -1)
 	return wmVideoUrl, nil
