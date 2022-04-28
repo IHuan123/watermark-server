@@ -63,6 +63,9 @@ func ZuiYou(rUrl, ua string) (string, error) {
 		}
 	}
 	var res Video
+	//"urlsrc":"http://video.izuiyou.com/zyvd/264/5f/0e/2b59-b687-11ec-9b89-00163e0e67b8",
+	//"urlext":"http://video.izuiyou.com/zyvd/264/5f/0e/2b59-b687-11ec-9b89-00163e0e67b8",
+	//"urlwm":"http://video.izuiyou.com/zyvd/264/5f/0e/2b59-b687-11ec-9b89-00163e0e67b8",
 	json.Unmarshal(body, &res)
 	fmt.Println(res.Data.Post.Videos.Urlext)
 	return string(body), nil
