@@ -50,6 +50,10 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		path, err = handleVideo.WeiShi(url, phone_ua)
 	} else if strings.Contains(url, "xiaochuankeji.cn") {
 		path, err = handleVideo.ZuiYou(url, phone_ua)
+	} else if strings.Contains(url, "m.eyepetizer.net") {
+		path, err = handleVideo.KaiYan(url, phone_ua)
+	} else {
+		base.Err(ctx, "暂不支持该平台！！！")
 	}
 	if err != nil {
 		base.Err(ctx, err.Error())

@@ -11,9 +11,9 @@ import (
 const hs_url = "https://share.huoshan.com/api/item/info?item_id="
 
 //获取真实请求地址的path
-func getHSRealityUrl(url, ua string) (url.Values, error) {
+func getHSRealityUrl(rUrl, ua string) (url.Values, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", rUrl, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -35,8 +35,8 @@ type HSRes struct {
 }
 
 //火山
-func HuoShan(url, ua string) (string, error) {
-	query, err := getHSRealityUrl(url, ua)
+func HuoShan(rUrl, ua string) (string, error) {
+	query, err := getHSRealityUrl(rUrl, ua)
 	if err != nil {
 		return "", err
 	}

@@ -9,9 +9,9 @@ import (
 )
 
 //获取真实请求地址的path
-func getBiLi(url, ua string) ([]byte, error) {
+func getBiLi(rUrl, ua string) ([]byte, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", rUrl, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -25,8 +25,8 @@ func getBiLi(url, ua string) ([]byte, error) {
 }
 
 //bilibili 画质低
-func BiliBili(url, ua string) (string, error) {
-	body, err := getBiLi(url, ua)
+func BiliBili(rUrl, ua string) (string, error) {
+	body, err := getBiLi(rUrl, ua)
 	if err != nil {
 		return "", err
 	}

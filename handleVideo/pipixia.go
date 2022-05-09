@@ -8,9 +8,9 @@ import (
 	"watermarkServer/modules"
 )
 
-func getPiPiXia(url string, ua string) (string, error) {
+func getPiPiXia(rUrl string, ua string) (string, error) {
 	client := http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", rUrl, nil)
 	if err != nil {
 		return "", err
 	}
@@ -24,8 +24,8 @@ func getPiPiXia(url string, ua string) (string, error) {
 	return path, nil
 }
 
-func PiPixia(url string, ua string) (string, error) {
-	path, err := getPiPiXia(url, ua)
+func PiPixia(rUrl string, ua string) (string, error) {
+	path, err := getPiPiXia(rUrl, ua)
 	if err != nil {
 		return "", err
 	}

@@ -14,9 +14,9 @@ const dy_url = "https://www.douyin.com/web/api/v2/aweme/iteminfo/?item_ids="
 
 // 抖音
 //获取真实请求地址的path
-func getDYRealityUrl(url, ua string) (string, error) {
+func getDYRealityUrl(rUrl, ua string) (string, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", rUrl, nil)
 	if err != nil {
 		return "", err
 	}
@@ -29,8 +29,8 @@ func getDYRealityUrl(url, ua string) (string, error) {
 }
 
 //通过path获取到到id 请求dy_url
-func DouYin(url string, ua string) (string, error) {
-	path, err := getDYRealityUrl(url, ua)
+func DouYin(rUrl string, ua string) (string, error) {
+	path, err := getDYRealityUrl(rUrl, ua)
 	if err != nil {
 		return "", err
 	}

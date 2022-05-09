@@ -8,9 +8,9 @@ import (
 	"regexp"
 )
 
-func getKSRealityUrl(url, ua string) ([]byte, error) {
+func getKSRealityUrl(rUrl, ua string) ([]byte, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", rUrl, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -28,8 +28,8 @@ func getKSRealityUrl(url, ua string) ([]byte, error) {
 }
 
 //bilibili
-func KuaiShou(url, ua string) (string, error) {
-	body, err := getKSRealityUrl(url, ua)
+func KuaiShou(rUrl, ua string) (string, error) {
+	body, err := getKSRealityUrl(rUrl, ua)
 	if err != nil {
 		return "", err
 	}

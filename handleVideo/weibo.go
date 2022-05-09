@@ -9,14 +9,14 @@ import (
 	"regexp"
 )
 
-func getWeiBoBody(rurl, id, ua string) (string, error) {
+func getWeiBoBody(rUrl, id, ua string) (string, error) {
 	postData := `{"Component_Play_Playinfo":{"oid":"` + id + `"}}`
 	formValues := url.Values{}
 	formValues.Add("data", postData)
 	formDataStr := formValues.Encode()
 	formDataBytes := []byte(formDataStr)
 	formBytesReader := bytes.NewReader(formDataBytes)
-	req, err := http.NewRequest("POST", rurl, formBytesReader)
+	req, err := http.NewRequest("POST", rUrl, formBytesReader)
 	if err != nil {
 		return "", err
 	}
@@ -43,9 +43,9 @@ func getWeiBoBody(rurl, id, ua string) (string, error) {
 	return string(body), nil
 }
 
-func WeiBo(vUrl string, ua string) (string, error) {
+func WeiBo(rUrl string, ua string) (string, error) {
 	reg := regexp.MustCompile(`(\d+:{1}\d+)`)
-	ids := reg.FindStringSubmatch(vUrl)
+	ids := reg.FindStringSubmatch(rUrl)
 	//parse, err := url.Parse(vUrl)
 	//if err != nil {
 	//	return "", err
@@ -54,8 +54,7 @@ func WeiBo(vUrl string, ua string) (string, error) {
 		return "", errors.New("无效地址")
 	}
 	//url.QueryEscape()
-	rUrl := "https://weibo.com/api/component?page=/tv/show/" + ids[0]
-	body, err := getWeiBoBody(rUrl, ids[0], ua)
+	body, err := getWeiBoBody("https://weibo.com/api/component?page=/tv/show/"+ids[0], ids[0], ua)
 	if err != nil {
 		return "", err
 	}
