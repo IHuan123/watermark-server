@@ -13,13 +13,7 @@ import (
 const zuiYouUrl = "https://share.xiaochuankeji.cn/planck/share/post/detail"
 
 func requestZuiYou(rUrl, id, ua string) ([]byte, error) {
-	//var data map[string]interface{}
-	//data["pid"] = id
 	data := fmt.Sprintf("{\"pid\":%s}", id)
-	//responseData, err := json.Marshal(data)
-	//if err != nil {
-	//	return nil, err
-	//}
 	req, err := http.NewRequest("POST", rUrl, bytes.NewBuffer([]byte(data)))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	if err != nil {
@@ -44,7 +38,6 @@ func ZuiYou(rUrl, ua string) (string, error) {
 		return "", err
 	}
 	query := parse.Query()
-	fmt.Println(query)
 	if len(query["pid"]) == 0 {
 		return "", errors.New("无效地址")
 	}
@@ -53,20 +46,27 @@ func ZuiYou(rUrl, ua string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	type Video struct {
+	var res *struct {
 		Data *struct {
 			Post *struct {
-				Videos *struct {
-					Urlext string
-				}
-			}
-		}
+				Videos map[string]interface{} `json:"videos"`
+			} `json:"post"`
+		} `json:"data"`
 	}
-	var res Video
-	//"urlsrc":"http://video.izuiyou.com/zyvd/264/5f/0e/2b59-b687-11ec-9b89-00163e0e67b8",
-	//"urlext":"http://video.izuiyou.com/zyvd/264/5f/0e/2b59-b687-11ec-9b89-00163e0e67b8",
-	//"urlwm":"http://video.izuiyou.com/zyvd/264/5f/0e/2b59-b687-11ec-9b89-00163e0e67b8",
-	json.Unmarshal(body, &res)
-	fmt.Println(res.Data.Post.Videos.Urlext)
-	return string(body), nil
+	err = json.Unmarshal(body, &res)
+	if err != nil {
+		return "", err
+	}
+	videos := res.Data.Post.Videos
+	var info interface{}
+	for _, videoInfo := range videos {
+		info = videoInfo
+	}
+	var videoUrl string
+	if info, ok := info.(map[string]interface{}); ok {
+		videoUrl = info["url"].(string)
+	} else {
+		return "", errors.New("解析失败")
+	}
+	return videoUrl, nil
 }
