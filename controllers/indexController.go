@@ -34,24 +34,26 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 	}
 	url := modules.GetUrl(keyWords)
 	var err error
-	if strings.Contains(url, "douyin.com") {
+	if strings.Contains(url, "douyin.com") { //抖音
 		path, err = handleVideo.DouYin(url, phone_ua)
-	} else if strings.Contains(url, "b23.tv") {
+	} else if strings.Contains(url, "b23.tv") { //哔哩哔哩
 		path, err = handleVideo.BiliBili(url, phone_ua)
-	} else if strings.Contains(url, "huoshan.com") {
+	} else if strings.Contains(url, "huoshan.com") { //火山
 		path, err = handleVideo.HuoShan(url, phone_ua)
-	} else if strings.Contains(url, "kuaishou.com") {
+	} else if strings.Contains(url, "kuaishou.com") { //快手
 		path, err = handleVideo.KuaiShou(url, phone_ua)
-	} else if strings.Contains(url, "pipix.com") {
+	} else if strings.Contains(url, "pipix.com") { // 皮皮虾
 		path, err = handleVideo.PiPixia(url, phone_ua)
-	} else if strings.Contains(url, "weibo.com") {
-		path, err = handleVideo.WeiBo(url, pc_ua)
-	} else if strings.Contains(url, "weishi.qq.com") {
+	} else if strings.Contains(url, "weishi.qq.com") { //微视
 		path, err = handleVideo.WeiShi(url, phone_ua)
-	} else if strings.Contains(url, "xiaochuankeji.cn") {
+	} else if strings.Contains(url, "xiaochuankeji.cn") { //最右
 		path, err = handleVideo.ZuiYou(url, phone_ua)
-	} else if strings.Contains(url, "m.eyepetizer.net") {
+	} else if strings.Contains(url, "m.eyepetizer.net") { //开眼
 		path, err = handleVideo.KaiYan(url, phone_ua)
+	} else if strings.Contains(url, "kg3.qq.com") { //全民k歌
+		path, err = handleVideo.QuanMingKGe(url, phone_ua)
+	} else if strings.Contains(url, "pipigx.com") { //皮皮搞笑
+		path, err = handleVideo.PiPiGX(url, phone_ua)
 	} else {
 		base.Err(ctx, "暂不支持该平台！！！")
 	}
