@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -38,6 +39,7 @@ func requestPiPiGX(rUrl string, ids []string, ua string) ([]byte, error) {
 }
 
 func PiPiGX(rUrl, ua string) (string, error) {
+	fmt.Println(rUrl)
 	parse, err := url.Parse(rUrl)
 	if err != nil {
 		return "", err

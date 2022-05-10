@@ -32,28 +32,28 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		})
 		return
 	}
-	url := modules.GetUrl(keyWords)
+	rUrl := modules.GetUrl(keyWords)
 	var err error
-	if strings.Contains(url, "douyin.com") { //抖音
-		path, err = handleVideo.DouYin(url, phone_ua)
-	} else if strings.Contains(url, "b23.tv") { //哔哩哔哩
-		path, err = handleVideo.BiliBili(url, phone_ua)
-	} else if strings.Contains(url, "huoshan.com") { //火山
-		path, err = handleVideo.HuoShan(url, phone_ua)
-	} else if strings.Contains(url, "kuaishou.com") { //快手
-		path, err = handleVideo.KuaiShou(url, phone_ua)
-	} else if strings.Contains(url, "pipix.com") { // 皮皮虾
-		path, err = handleVideo.PiPixia(url, phone_ua)
-	} else if strings.Contains(url, "weishi.qq.com") { //微视
-		path, err = handleVideo.WeiShi(url, phone_ua)
-	} else if strings.Contains(url, "xiaochuankeji.cn") { //最右
-		path, err = handleVideo.ZuiYou(url, phone_ua)
-	} else if strings.Contains(url, "m.eyepetizer.net") { //开眼
-		path, err = handleVideo.KaiYan(url, phone_ua)
-	} else if strings.Contains(url, "kg3.qq.com") { //全民k歌
-		path, err = handleVideo.QuanMingKGe(url, phone_ua)
-	} else if strings.Contains(url, "pipigx.com") { //皮皮搞笑
-		path, err = handleVideo.PiPiGX(url, phone_ua)
+	if strings.Contains(rUrl, "douyin.com") { //抖音
+		path, err = handleVideo.DouYin(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "b23.tv") { //哔哩哔哩
+		path, err = handleVideo.BiliBili(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "huoshan.com") { //火山
+		path, err = handleVideo.HuoShan(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "kuaishou.com") { //快手
+		path, err = handleVideo.KuaiShou(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "pipix.com") { // 皮皮虾
+		path, err = handleVideo.PiPixia(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "weishi.qq.com") { //微视
+		path, err = handleVideo.WeiShi(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "xiaochuankeji.cn") { //最右
+		path, err = handleVideo.ZuiYou(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "m.eyepetizer.net") { //开眼
+		path, err = handleVideo.KaiYan(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "kg3.qq.com") { //全民k歌
+		path, err = handleVideo.QuanMingKGe(rUrl, phone_ua)
+	} else if strings.Contains(rUrl, "pipigx.com") { //皮皮搞笑
+		path, err = handleVideo.PiPiGX(rUrl, phone_ua)
 	} else {
 		base.Err(ctx, "暂不支持该平台！！！")
 	}
