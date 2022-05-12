@@ -37,7 +37,7 @@ func DouYin(rUrl string, ua string) (string, error) {
 	re := regexp.MustCompile("[0-9]+")
 	ids := re.FindAllString(path, -1)
 	if len(ids) == 0 {
-		return "", errors.New("无效连接")
+		return "", errors.New("无效链接！！！")
 	}
 	body, err := modules.HttpGet(dy_url+ids[0], ua)
 	if err != nil {

@@ -23,6 +23,7 @@ var base = &modules.BaseController{}
 
 func (ctr *IndexController) Index(ctx *gin.Context) {
 	var path string
+	var err error
 	var keyWords string = ctx.Query("key_words")
 	if keyWords == "" {
 		ctx.JSON(http.StatusOK, gin.H{
@@ -32,8 +33,11 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		})
 		return
 	}
-	rUrl := modules.GetUrl(keyWords)
-	var err error
+	rUrl, err := modules.GetUrl(keyWords)
+	if err != nil {
+		base.Err(ctx, err.Error())
+		return
+	}
 	if strings.Contains(rUrl, "douyin.com") { //抖音
 		path, err = handleVideo.DouYin(rUrl, phone_ua)
 	} else if strings.Contains(rUrl, "b23.tv") { //哔哩哔哩
@@ -61,6 +65,5 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		base.Err(ctx, err.Error())
 		return
 	}
-
 	base.Success(ctx, path, "解析完成")
 }

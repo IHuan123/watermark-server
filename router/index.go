@@ -8,5 +8,5 @@ import (
 var ctr = controllers.IndexController{}
 
 func IndexRouter(r *gin.Engine) {
-	r.GET("/", ctr.Index)
+	r.GET("/parse", ctr.Index)
 }
