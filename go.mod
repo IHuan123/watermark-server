@@ -2,7 +2,11 @@ module watermarkServer
 
 go 1.18
 
-require github.com/gin-gonic/gin v1.7.7
+require (
+	github.com/gin-contrib/static v0.0.1
+	github.com/gin-gonic/gin v1.7.7
+	mvdan.cc/xurls/v2 v2.4.0
+)
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0 // indirect
@@ -25,5 +29,4 @@ require (
 	golang.org/x/net v0.0.0-20210916014120-12bc252f5db8 // indirect
 	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
-	mvdan.cc/xurls/v2 v2.4.0 // indirect
 )

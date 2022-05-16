@@ -34,7 +34,7 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code": http.StatusBadRequest,
 			"msg":  "缺少关键词",
-			"data": "",
+			"data": nil,
 		})
 		return
 	}

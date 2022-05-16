@@ -2,7 +2,7 @@ package handleVideo
 
 import (
 	"encoding/json"
-	"log"
+	"errors"
 	"net/http"
 	"net/url"
 	"watermarkServer/modules"
@@ -20,7 +20,7 @@ func getHSRealityUrl(rUrl, ua string) (url.Values, error) {
 	req.Header.Set("User-Agent", ua)
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Println(err)
+		return nil, err
 	}
 	return resp.Request.URL.Query(), nil
 }
@@ -40,8 +40,11 @@ func HuoShan(rUrl, ua string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	item_id := query["item_id"]
-	body, err := modules.HttpGet(hs_url+item_id[0], ua)
+	itemId := query["item_id"]
+	if itemId == nil {
+		return "", errors.New("无效地址")
+	}
+	body, err := modules.HttpGet(hs_url+itemId[0], ua)
 	if err != nil {
 		return "", err
 	}

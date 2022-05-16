@@ -1,0 +1,1 @@
+//! Bug  Snackbar 设置自动隐藏 功能需要提供 onClose 事件 但是点击页面一下就会触发onClose事件 无奈自己实现
