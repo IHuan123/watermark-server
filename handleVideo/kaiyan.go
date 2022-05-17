@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"watermarkServer/modules"
 )
 
 var kaiYanUrl = "https://proxy.eyepetizer.net/v1/content/item/get_item_detail_v2"
@@ -25,11 +26,17 @@ func requestKaiYan(rUrl, id, ua string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	key := "token"
+	dict := make(map[string]interface{})
+	tokenNew, err := modules.GenerateToken(dict, key)
+	if err != nil {
+		return nil, err
+	}
 	//注意别忘了设置header
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	request.Header.Set("user-agent", ua)
 	request.Header.Set("x-thefair-appid", "xfpa44crf2p70lk8")
-	request.Header.Set("x-thefair-auth", "l09fEQZat/sF4m4NBgPtrAwTe7nfp+6LDEbeUzSB4sINogHGpoyqqcR2GhErO7D0vp8wXPQ3pqvGh3ByFncdn8OPlKDGavvYIlBw1IAohClG2GA88+vsopzbYAROmGgqaLtQqcGfp2AcUdeu43yBwlL6UewRCm0mosXmgahYxIz4hpei3+HwS9jsGrUS+Q3DVaQC58Bk0OIe0RPk+zqCaUALzTj1ouF8VaI/2yqQst4fIIBG/Vpqdm9VEZrGeeTb")
+	request.Header.Set("x-thefair-auth", tokenNew)
 	request.Header.Set("x-thefair-cid", "6ba20b639ea95388f36cfb468e111b1a")
 	request.Header.Set("x-thefair-forward-host", "https://api.eyepetizer.net")
 	request.Header.Set("x-thefair-ua", "EYEPETIZER_UNIAPP_H5/100000 (android;android;OS_VERSION_UNKNOWN;zh-Hans-CN;h5;1.0.0;cn-bj;SOURCE_UNKNOWN;6ba20b639ea95388f36cfb468e111b1a;2560*1080;NETWORK_UNKNOWN) native/1.0")
@@ -46,19 +53,20 @@ func requestKaiYan(rUrl, id, ua string) ([]byte, error) {
 }
 
 func KaiYan(sUrl, ua string) (string, error) {
-	fmt.Println(sUrl)
 	sUri, err := url.Parse(sUrl)
 	if err != nil {
 		return "", err
 	}
 	query := sUri.Query()
 	ids := query["video_id"]
+	fmt.Println(ids)
 	if len(ids) == 1 {
 		body, err := requestKaiYan(kaiYanUrl, ids[0], ua)
 		if err != nil {
 			return "", err
 		}
 		var res struct {
+			Code   int `json:"code"`
 			Result struct {
 				Video struct {
 					PlayUrl string `json:"play_url"`
@@ -68,6 +76,9 @@ func KaiYan(sUrl, ua string) (string, error) {
 		err = json.Unmarshal(body, &res)
 		if err != nil {
 			return "", err
+		}
+		if res.Code != 0 {
+			return "", errors.New("解析出现问题！")
 		}
 		return res.Result.Video.PlayUrl, nil
 	} else {

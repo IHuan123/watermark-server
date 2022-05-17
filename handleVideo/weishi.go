@@ -3,7 +3,6 @@ package handleVideo
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -34,13 +33,11 @@ func WeiShi(rUrl, ua string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Println(parse.Query())
 	ids := parse.Query()["id"]
 	if len(ids) == 0 {
 		return "", errors.New("无效地址")
 	}
 	id := ids[0]
-	fmt.Println(id)
 	type Video struct {
 		Data *struct {
 			Feeds []*struct {

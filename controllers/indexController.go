@@ -87,6 +87,7 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		platformInfo.Name = ""
 		platformInfo.Platform = ""
 		base.Err(ctx, "暂不支持该平台！！！")
+		return
 	}
 	if err != nil {
 		base.Err(ctx, err.Error())
