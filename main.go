@@ -18,6 +18,7 @@ func main() {
 
 	r.Static("/assets", "./assets")
 	r.Use(static.Serve("/", static.LocalFile("template/dist", true)))
+	//r.Use(middleware.Core())
 	r.NoRoute(func(c *gin.Context) {
 		accept := c.Request.Header.Get("Accept")
 		flag := strings.Contains(accept, "text/html")
