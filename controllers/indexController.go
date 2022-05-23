@@ -48,7 +48,7 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		platformInfo.Platform = "douyin"
 		path, err = handleVideo.DouYin(rUrl, phone_ua)
 	} else if strings.Contains(rUrl, "b23.tv") { //哔哩哔哩
-		platformInfo.Name = "bilibili"
+		platformInfo.Name = "BiliBili"
 		platformInfo.Platform = "bilibili"
 		path, err = handleVideo.BiliBili(rUrl, phone_ua)
 	} else if strings.Contains(rUrl, "huoshan.com") { //火山
