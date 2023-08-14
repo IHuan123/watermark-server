@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/gin-contrib/static"
-	"github.com/gin-gonic/gin"
 	"io"
 	"io/ioutil"
 	"os"
 	"strings"
 	"watermarkServer/router"
+
+	"github.com/gin-contrib/static"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {

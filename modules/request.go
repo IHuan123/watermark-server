@@ -9,7 +9,6 @@ import (
 
 // get请求
 func HttpGet(url string, ua string) ([]byte, error) {
-	fmt.Println("请求的url", url)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -17,6 +16,7 @@ func HttpGet(url string, ua string) ([]byte, error) {
 	}
 	req.Header.Set("User-Agent", ua)
 	resp, err := client.Do(req)
+
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +28,7 @@ func HttpGet(url string, ua string) ([]byte, error) {
 	return body, err
 }
 
-//post请求
+// post请求
 func HttpPost(url, params string) ([]byte, error) {
 	client := &http.Client{}
 
@@ -38,7 +38,7 @@ func HttpPost(url, params string) ([]byte, error) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1")
 
 	resp, err := client.Do(req)
 	if err != nil {

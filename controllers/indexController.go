@@ -1,20 +1,22 @@
 package controllers
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
 	"net/http"
 	"strings"
 	"watermarkServer/handleVideo"
 	"watermarkServer/modules"
+
+	"github.com/gin-gonic/gin"
 )
 
 const (
 	// pc端
-	pc_ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
+	// pc_ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36"
 	//mac chrome
-	mac_ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+	// mac_ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
 	// 移动端
-	phone_ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1"
+	phone_ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
 )
 
 type IndexController struct{}
@@ -47,6 +49,7 @@ func (ctr *IndexController) Index(ctx *gin.Context) {
 		platformInfo.Name = "抖音"
 		platformInfo.Platform = "douyin"
 		path, err = handleVideo.DouYin(rUrl, phone_ua)
+		fmt.Println("Index", path, err)
 	} else if strings.Contains(rUrl, "b23.tv") { //哔哩哔哩
 		platformInfo.Name = "BiliBili"
 		platformInfo.Platform = "bilibili"
